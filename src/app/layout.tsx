@@ -42,6 +42,12 @@ export const metadata: Metadata = {
     title: DEFAULT_TITLE,
     description: SITE_DESCRIPTION,
   },
+  // Google AdSense site-verification meta tag. Set unconditionally (not
+  // env-gated) alongside the AdSense <Script> below, so Google's
+  // verification crawler can find it regardless of NEXT_PUBLIC_ADSENSE_CLIENT_ID.
+  other: {
+    "google-adsense-account": "ca-pub-2056654017002912",
+  },
 };
 
 export default function RootLayout({
