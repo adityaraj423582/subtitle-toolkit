@@ -1,4 +1,5 @@
 import { buildMetadata, buildWebApplicationJsonLd } from "@/lib/site-config";
+import { AdSlot } from "@/components/shared/AdSlot";
 import { SrtToVttTool } from "./SrtToVttTool";
 
 const TITLE = "Free SRT to VTT Converter Online | SubtitleToolkit";
@@ -34,6 +35,8 @@ export default function SrtToVttPage() {
       <div className="mt-10">
         <SrtToVttTool />
       </div>
+
+      <AdSlot slot="tools-srt-to-vtt-inline" className="mt-10" />
 
       <div className="mt-16 space-y-4 text-sm leading-relaxed text-muted-foreground">
         <h2 className="text-base font-semibold text-foreground">

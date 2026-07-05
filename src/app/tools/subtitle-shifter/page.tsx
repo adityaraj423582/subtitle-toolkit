@@ -1,4 +1,5 @@
 import { buildMetadata, buildWebApplicationJsonLd } from "@/lib/site-config";
+import { AdSlot } from "@/components/shared/AdSlot";
 import { SubtitleShifterTool } from "./SubtitleShifterTool";
 
 const TITLE = "Free Subtitle Sync Fixer — Shift SRT/VTT Timing Online | SubtitleToolkit";
@@ -34,6 +35,8 @@ export default function SubtitleShifterPage() {
       <div className="mt-10">
         <SubtitleShifterTool />
       </div>
+
+      <AdSlot slot="tools-subtitle-shifter-inline" className="mt-10" />
 
       <div className="mt-16 space-y-4 text-sm leading-relaxed text-muted-foreground">
         <h2 className="text-base font-semibold text-foreground">

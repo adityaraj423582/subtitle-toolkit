@@ -1,4 +1,5 @@
 import { buildMetadata, buildWebApplicationJsonLd } from "@/lib/site-config";
+import { AdSlot } from "@/components/shared/AdSlot";
 import { SubtitleMergerTool } from "./SubtitleMergerTool";
 
 const TITLE = "Free Subtitle Merger — Combine SRT/VTT Files Online | SubtitleToolkit";
@@ -34,6 +35,8 @@ export default function SubtitleMergerPage() {
       <div className="mt-10">
         <SubtitleMergerTool />
       </div>
+
+      <AdSlot slot="tools-subtitle-merger-inline" className="mt-10" />
 
       <div className="mt-16 space-y-4 text-sm leading-relaxed text-muted-foreground">
         <h2 className="text-base font-semibold text-foreground">

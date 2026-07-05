@@ -17,6 +17,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { TOOLS_CATALOG } from "@/lib/tools-catalog";
+import { AdSlot } from "@/components/shared/AdSlot";
 
 const features = [
   {
@@ -135,6 +136,16 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      {/*
+        No vertical margin/padding on this wrapper — AdSlot renders `null`
+        until NEXT_PUBLIC_ADSENSE_CLIENT_ID is set, so an empty wrapper here
+        must contribute exactly zero height. All spacing lives on AdSlot's
+        own className, which only exists once it actually renders something.
+      */}
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <AdSlot slot="home-inline" className="my-8" />
+      </div>
 
       <section className="mx-auto max-w-6xl px-4 pb-24 sm:px-6 lg:px-8">
         <div className="overflow-hidden rounded-2xl border border-border/70 bg-muted/30 px-6 py-12 sm:px-12">

@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import { TOOLS_CATALOG } from "@/lib/tools-catalog";
 import { buildMetadata } from "@/lib/site-config";
+import { AdSlot } from "@/components/shared/AdSlot";
 
 export const metadata = buildMetadata({
   title: "Subtitle Tools",
@@ -64,6 +65,8 @@ export default function ToolsPage() {
           </Card>
         ))}
       </div>
+
+      <AdSlot slot="tools-index-inline" className="mt-12" />
     </div>
   );
 }
