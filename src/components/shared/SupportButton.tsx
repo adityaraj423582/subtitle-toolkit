@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Coffee, QrCode } from "lucide-react";
+import Image from "next/image";
+import { Coffee, Copy } from "lucide-react";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,13 +15,21 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-// TODO: Replace these two placeholders once the real UPI ID and QR code
-// image are ready — this is the only place that needs to change. Drop the
-// QR image at `public/upi-qr.png` (or wherever) and point QR_IMAGE_SRC at
-// it; `SupportModalContent` below will automatically swap the placeholder
-// icon for the real image.
-const UPI_ID = "your-upi-id@placeholder";
-const QR_IMAGE_SRC: string | null = null;
+// The only two values that need to change if the UPI ID or QR code ever
+// need to be updated.
+const UPI_ID = "adityaraj423582-1@oksbi";
+const QR_IMAGE_SRC = "/upi-qr.png";
+
+async function copyUpiId() {
+  try {
+    await navigator.clipboard.writeText(UPI_ID);
+    toast.success("UPI ID copied!");
+  } catch {
+    toast.error("Couldn't copy the UPI ID", {
+      description: "Please copy it manually instead.",
+    });
+  }
+}
 
 /**
  * The support modal's body — pulled out on its own so it can be reused by
@@ -37,23 +47,26 @@ export function SupportModalContent() {
         </DialogDescription>
       </DialogHeader>
 
-      {/*
-        TODO: Replace placeholder QR image (public/upi-qr.png) and UPI ID
-        string once provided. Add a "Copy UPI ID" button with a toast
-        confirmation once the real ID is set.
-      */}
       <div className="flex flex-col items-center gap-4 py-2">
-        <div className="flex size-40 items-center justify-center rounded-xl bg-muted">
-          {QR_IMAGE_SRC ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={QR_IMAGE_SRC} alt="UPI QR code" className="size-full rounded-xl object-contain" />
-          ) : (
-            <QrCode className="size-16 text-muted-foreground" />
-          )}
+        <Image
+          src={QR_IMAGE_SRC}
+          alt="UPI QR code"
+          width={240}
+          height={240}
+          className="rounded-xl border border-border object-contain"
+        />
+        <div className="flex items-center gap-1.5 rounded-md bg-muted px-3 py-1.5">
+          <code className="text-sm text-foreground">UPI ID: {UPI_ID}</code>
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon-sm"
+            aria-label="Copy UPI ID"
+            onClick={copyUpiId}
+          >
+            <Copy className="size-3.5" />
+          </Button>
         </div>
-        <code className="rounded-md bg-muted px-3 py-1.5 text-sm text-foreground">
-          UPI ID: {UPI_ID}
-        </code>
       </div>
     </>
   );
@@ -66,9 +79,9 @@ interface SupportButtonProps {
 }
 
 /**
- * A small "buy me a coffee"-style pill button that opens a modal with
- * (placeholder, for now) UPI donation details. Deliberately styled with a
- * warm amber accent so it doesn't blend into the site's indigo brand color.
+ * A small "buy me a coffee"-style pill button that opens a modal with UPI
+ * donation details. Deliberately styled with a warm amber accent so it
+ * doesn't blend into the site's indigo brand color.
  */
 export function SupportButton({ variant = "header", className }: SupportButtonProps) {
   const [open, setOpen] = useState(false);
