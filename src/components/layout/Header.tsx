@@ -7,6 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { SupportButton } from "@/components/shared/SupportButton";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -39,6 +40,8 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <SupportButton variant="header" className="hidden sm:inline-flex" />
+
           <Button
             asChild
             className="hidden bg-gradient-to-r from-indigo-500 to-violet-500 text-white shadow-sm transition-shadow hover:from-indigo-500 hover:to-violet-600 hover:shadow-md sm:inline-flex"

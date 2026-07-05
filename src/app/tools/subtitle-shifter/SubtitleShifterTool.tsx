@@ -14,7 +14,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { FileDropzone } from "@/components/shared/FileDropzone";
+import { SupportModalContent } from "@/components/shared/SupportButton";
+import { markSupportNudgeShown, shouldShowSupportNudge } from "@/lib/support-nudge";
 import { shiftCues } from "@/lib/subtitle-shift";
 import {
   detectFormat,
@@ -27,6 +30,8 @@ import {
   type SubtitleCue,
   type SubtitleFormat,
 } from "@/lib/subtitle-formats";
+
+const TOOL_SLUG = "subtitle-shifter";
 
 type TimeUnit = "seconds" | "milliseconds";
 type ShiftDirection = "forward" | "backward";
@@ -81,6 +86,7 @@ export function SubtitleShifterTool() {
   const [unit, setUnit] = useState<TimeUnit>("seconds");
   const [direction, setDirection] = useState<ShiftDirection>("forward");
   const [result, setResult] = useState<ShiftResult | null>(null);
+  const [supportOpen, setSupportOpen] = useState(false);
 
   const offsetMs = useMemo(
     () => computeOffsetMs(offsetInput, unit, direction),
@@ -144,6 +150,16 @@ export function SubtitleShifterTool() {
   function handleDownload() {
     if (!result) return;
     downloadTextFile(result.content, result.filename);
+
+    if (shouldShowSupportNudge(TOOL_SLUG)) {
+      toast("Glad that helped! If SubtitleToolkit saved you time, consider supporting it ☕", {
+        action: {
+          label: "Support",
+          onClick: () => setSupportOpen(true),
+        },
+      });
+      markSupportNudgeShown(TOOL_SLUG);
+    }
   }
 
   const previewCues = cues?.slice(0, 3) ?? [];
@@ -286,6 +302,12 @@ export function SubtitleShifterTool() {
           </>
         ) : null}
       </CardContent>
+
+      <Dialog open={supportOpen} onOpenChange={setSupportOpen}>
+        <DialogContent>
+          <SupportModalContent />
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 }

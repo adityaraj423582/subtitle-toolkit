@@ -12,8 +12,13 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { FileDropzone } from "@/components/shared/FileDropzone";
+import { SupportModalContent } from "@/components/shared/SupportButton";
+import { markSupportNudgeShown, shouldShowSupportNudge } from "@/lib/support-nudge";
 import { convertSubtitle, detectFormat, type SubtitleFormat } from "@/lib/subtitle-formats";
+
+const TOOL_SLUG = "srt-to-vtt";
 
 interface ConversionResult {
   content: string;
@@ -61,6 +66,7 @@ export function SrtToVttTool() {
   const [targetFormat, setTargetFormat] = useState<SubtitleFormat>("vtt");
   const [isConverting, setIsConverting] = useState(false);
   const [result, setResult] = useState<ConversionResult | null>(null);
+  const [supportOpen, setSupportOpen] = useState(false);
 
   async function handleFileSelect(selected: File) {
     setResult(null);
@@ -112,6 +118,16 @@ export function SrtToVttTool() {
   function handleDownload() {
     if (!result) return;
     downloadTextFile(result.content, result.filename);
+
+    if (shouldShowSupportNudge(TOOL_SLUG)) {
+      toast("Glad that helped! If SubtitleToolkit saved you time, consider supporting it ☕", {
+        action: {
+          label: "Support",
+          onClick: () => setSupportOpen(true),
+        },
+      });
+      markSupportNudgeShown(TOOL_SLUG);
+    }
   }
 
   return (
@@ -196,6 +212,12 @@ export function SrtToVttTool() {
           </>
         ) : null}
       </CardContent>
+
+      <Dialog open={supportOpen} onOpenChange={setSupportOpen}>
+        <DialogContent>
+          <SupportModalContent />
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 }

@@ -15,7 +15,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { FileDropzone } from "@/components/shared/FileDropzone";
+import { SupportModalContent } from "@/components/shared/SupportButton";
+import { markSupportNudgeShown, shouldShowSupportNudge } from "@/lib/support-nudge";
 import { mergeDualLanguage, mergeSequential } from "@/lib/subtitle-merge";
 import {
   detectFormat,
@@ -26,6 +29,8 @@ import {
   type SubtitleCue,
   type SubtitleFormat,
 } from "@/lib/subtitle-formats";
+
+const TOOL_SLUG = "subtitle-merger";
 
 type MergeMode = "sequential" | "dual";
 
@@ -76,6 +81,7 @@ export function SubtitleMergerTool() {
   const [outputFormat, setOutputFormat] = useState<SubtitleFormat>("srt");
   const [outputFormatTouched, setOutputFormatTouched] = useState(false);
   const [result, setResult] = useState<MergeResult | null>(null);
+  const [supportOpen, setSupportOpen] = useState(false);
 
   async function loadSlot(file: File): Promise<FileSlot> {
     const content = await readFileAsText(file);
@@ -169,6 +175,16 @@ export function SubtitleMergerTool() {
   function handleDownload() {
     if (!result) return;
     downloadTextFile(result.content, result.filename);
+
+    if (shouldShowSupportNudge(TOOL_SLUG)) {
+      toast("Glad that helped! If SubtitleToolkit saved you time, consider supporting it ☕", {
+        action: {
+          label: "Support",
+          onClick: () => setSupportOpen(true),
+        },
+      });
+      markSupportNudgeShown(TOOL_SLUG);
+    }
   }
 
   function handleStartOver() {
@@ -302,6 +318,12 @@ export function SubtitleMergerTool() {
           </>
         ) : null}
       </CardContent>
+
+      <Dialog open={supportOpen} onOpenChange={setSupportOpen}>
+        <DialogContent>
+          <SupportModalContent />
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 }
