@@ -2,11 +2,27 @@ import type { Metadata } from "next";
 
 export const SITE_NAME = "SubtitleToolkit";
 
-// Placeholder production domain — update once the final domain is chosen.
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL?.trim() || "https://subtitletoolkit.com").replace(
-  /\/$/,
-  "",
-);
+/**
+ * Resolves the canonical site URL with a single, predictable fallback chain:
+ *
+ * 1. `NEXT_PUBLIC_SITE_URL` — set this once a real production domain is
+ *    purchased and configured.
+ * 2. `VERCEL_URL` — automatically provided by Vercel for every deployment
+ *    (production and preview) when the explicit var isn't set. It's just a
+ *    bare hostname, so "https://" is prepended.
+ * 3. `http://localhost:3000` — local development fallback.
+ */
+function resolveSiteUrl(): string {
+  const explicit = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (explicit) return explicit;
+
+  const vercelUrl = process.env.VERCEL_URL?.trim();
+  if (vercelUrl) return `https://${vercelUrl}`;
+
+  return "http://localhost:3000";
+}
+
+export const SITE_URL = resolveSiteUrl().replace(/\/$/, "");
 
 export const SITE_DESCRIPTION =
   "Convert, shift, and merge subtitle files instantly in your browser. 100% free, private, and no signup required.";
