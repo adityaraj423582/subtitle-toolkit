@@ -42,11 +42,13 @@ export const metadata: Metadata = {
     title: DEFAULT_TITLE,
     description: SITE_DESCRIPTION,
   },
-  // Google AdSense site-verification meta tag. Set unconditionally (not
-  // env-gated) alongside the AdSense <Script> below, so Google's
-  // verification crawler can find it regardless of NEXT_PUBLIC_ADSENSE_CLIENT_ID.
+  // Google site-verification meta tags. Set unconditionally (not
+  // env-gated), so Google's crawlers can always find them:
+  // - google-adsense-account: pairs with the AdSense <Script> below.
+  // - google-site-verification: Google Search Console ownership proof.
   other: {
     "google-adsense-account": "ca-pub-2056654017002912",
+    "google-site-verification": "ZP7qB8nSjijjMEfByZKCyvQhuUhDLziI7ezzLdqV_kE",
   },
 };
 
