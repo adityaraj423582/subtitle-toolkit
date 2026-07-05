@@ -6,6 +6,12 @@
 
 Convert, shift, and merge SRT/VTT subtitle files instantly — no signup, no uploads, no server ever sees your files.
 
+### 🔗 [**Live Demo → subtitle-toolkit-eight.vercel.app**](https://subtitle-toolkit-eight.vercel.app/)
+
+[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-subtitle--toolkit--eight.vercel.app-6366f1?style=for-the-badge&logo=vercel&logoColor=white)](https://subtitle-toolkit-eight.vercel.app/)
+
+<br />
+
 [![Next.js](https://img.shields.io/badge/Next.js-16-000000?style=flat-square&logo=next.js&logoColor=white)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38BDF8?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
@@ -149,6 +155,8 @@ npm run test:watch  # watch mode
 <br />
 
 ## ☁️ Deploying to Vercel
+
+The project is already live at **[subtitle-toolkit-eight.vercel.app](https://subtitle-toolkit-eight.vercel.app/)** — deploying your own copy takes the same four steps:
 
 1. Push this repo to GitHub (already done if you're reading this on GitHub 👋).
 2. Go to [vercel.com/new](https://vercel.com/new) and import the repository — Vercel auto-detects Next.js and needs zero configuration.
