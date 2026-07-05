@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import Script from "next/script";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -53,6 +54,26 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${jetBrainsMono.variable} h-full antialiased`}
     >
+      <head>
+        {/*
+          Google AdSense site-verification / ad-serving script. Loaded
+          unconditionally (not gated by NEXT_PUBLIC_ADSENSE_CLIENT_ID) so
+          Google's verification crawler can always find it — this is
+          separate from the per-unit <AdSlot /> component.
+
+          strategy="beforeInteractive" is required here (not
+          afterInteractive) because it's the only next/script strategy Next.js
+          actually injects into the server-rendered <head> — afterInteractive
+          scripts are always appended to <body> client-side after hydration,
+          regardless of where the <Script> component is placed in the tree.
+        */}
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2056654017002912"
+          crossOrigin="anonymous"
+          strategy="beforeInteractive"
+        />
+      </head>
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <Header />
         <main className="flex-1">{children}</main>
